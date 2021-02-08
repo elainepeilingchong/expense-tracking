@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import { Button, Icon, Left, Right, Title, View, Text } from 'native-base';
 import EmptyContainer from './EmptyContainer';
 import { ScaledSheet } from 'react-native-size-matters';
-import { COLORS } from '../style/colorStyle';
-import textStyle from '../style/textStyle';
+import { COLORS } from '../styles/colorStyle';
+import textStyle from '../styles/textStyle';
 import CustomizedText from './CustomizedText';
 
 const CustomizedHeader = (props) => {

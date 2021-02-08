@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { moderateScale, ScaledSheet } from 'react-native-size-matters';
 import { Image, Button, View } from 'react-native';
-import { COLORS } from './style/colorStyle';
+import { COLORS } from './styles/colorStyle';
 import Icon from 'react-native-vector-icons/FontAwesome';
 const MyIcon = <Icon name="rocket" size={30} color="#900" />;
 const coverPhoto = require('../common/assets/drinks-cover.png');

@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { ScaledSheet } from 'react-native-size-matters';
 import EText from './EText';
 import { TouchableOpacity, View } from 'react-native';
-import { COLORS } from '../style/colorStyle';
-import textStyle from '../style/textStyle';
+import { COLORS } from '../styles/colorStyle';
+import textStyle from '../styles/textStyle';
 
 const EButton = (props) => {
 
@@ -94,7 +94,7 @@ const EButton = (props) => {
         generateStyle();
 
     }, [])
-    if (buttonStyle.length == 0 || textStyle.length == 0 || disabledButtonStyle.length === 0) {
+    if (buttonStyle.length == 0 || textStyle.length == 0) {
         return (<></>);
     }
     return (
@@ -118,7 +118,7 @@ const styles = ScaledSheet.create({
         borderRadius: '10@ms',
         height: '40@vs',
         width: '150@ms',
-        backgroundColor: COLORS.darkBrown,
+        backgroundColor: COLORS.black,
         alignItems: 'center',
         justifyContent: 'center',
         paddingTop: '5@ms',
@@ -131,7 +131,7 @@ const styles = ScaledSheet.create({
         borderRadius: 100/2,
         height: '40@vs',
         width: '150@ms',
-        backgroundColor: COLORS.darkBrown,
+        backgroundColor: COLORS.black,
         alignItems: 'center',
         justifyContent: 'center',
         paddingTop: '5@ms',
@@ -154,7 +154,7 @@ const styles = ScaledSheet.create({
     rightViewStyle:{
     },
     textOnlyTextStyle: {
-        color: 'white',
+        color: COLORS.black,
         margin: 0,
         marginTop: 0,
         marginBottom: 0,
@@ -187,9 +187,17 @@ const styles = ScaledSheet.create({
 })
 EButton.prototype = {
     textOnlyButton: PropTypes.bool,
+    title: PropTypes.string,
+    disabled: PropTypes.bool,
+    onPress: PropTypes.func,
+    onChange: PropTypes.func,
 }
 EButton.defaultProps = {
     textOnlyButton: false,
+    title: "I'm title",
+    disabled: false,
+    onPress: ()=>{},
+    onChange: ()=>{}
 }
 
 export default EButton;

@@ -4,4 +4,5 @@ export const COLORS = {
     white: "#ffffff",
     redErrorText: '#ff6e5e',
     greenSuccessTex: '#1BCC95',
+    greyText: '#888888',
 }

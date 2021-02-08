@@ -2,9 +2,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const UPDATE_EXPENSES = "UPDATE_EXPENSES"
 export const UPDATE_CATEGORIES = "UPDATE_CATEGORIES"
-
-export function getAllData(){
-    return async dispatch =>{
+export const ADD_CATEGORY = "ADD_CATEGORY"
+export const ADD_EXPENSE = "ADD_EXPENSE"
+export function getAllData() {
+    return async dispatch => {
         console.log("Getting All data")
 
         dispatch(retrieveCategories());
@@ -26,10 +27,10 @@ export function retrieveCategories() {
                     payload: value
                 })
             }
-            console.log("action: running retrieveCategories-> value: "+ JSON.stringify(value))
+            console.log("action: running retrieveCategories-> value: " + JSON.stringify(value))
 
         } catch (error) {
-            console.error("action: retrieveCategories-> "+ JSON.stringify(error))
+            console.error("action: retrieveCategories-> " + JSON.stringify(error))
             // Error retrieving data
         }
     }
@@ -38,12 +39,16 @@ export function retrieveCategories() {
 export function storeCategory(params) {
     return async dispatch => {
         try {
-            await AsyncStorage.setItem(
-                'categories',
-                'I like to save it.'
-            );
+            console.log(JSON.stringify(params))
+            dispatch({
+                type: ADD_CATEGORY,
+                payload: params
+            })
+
+            return true;
         } catch (error) {
-            // Error saving data
+            console.error("action: storeCategory-> " + JSON.stringify(error))
+            return false;
         }
     }
 }
@@ -51,12 +56,16 @@ export function storeCategory(params) {
 export function storeExpense(params) {
     return async dispatch => {
         try {
-            await AsyncStorage.setItem(
-                '@MySuperStore:key',
-                'I like to save it.'
-            );
+            console.log(JSON.stringify(params))
+            dispatch({
+                type: ADD_EXPENSE,
+                payload: params
+            })
+
+            return true;
         } catch (error) {
-            // Error saving data
+            console.error("action: storeExpense-> " + JSON.stringify(error))
+            return false;
         }
     }
 }
@@ -65,7 +74,7 @@ export function retrievExpenses() {
     return async dispatch => {
         try {
             const value = await AsyncStorage.getItem('expenses');
-            console.log("action: running retrievExpenses-> value: "+ JSON.stringify(value))
+            console.log("action: running retrievExpenses-> value: " + JSON.stringify(value))
 
             if (value !== null) {
                 dispatch({
@@ -74,7 +83,7 @@ export function retrievExpenses() {
                 })
             }
         } catch (error) {
-            console.error("action: retrievExpenses-> "+ JSON.stringify(error))
+            console.error("action: retrievExpenses-> " + JSON.stringify(error))
         }
     }
 }

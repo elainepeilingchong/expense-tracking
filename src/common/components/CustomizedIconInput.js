@@ -3,12 +3,11 @@ import { Button, Icon, Input, Item, Text, Picker } from 'native-base';
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { moderateScale, ScaledSheet } from 'react-native-size-matters';
-import textStyle from '../style/textStyle';
+import textStyle from '../styles/textStyle';
 import { Image, View } from 'react-native';
-import { COLORS } from '../style/colorStyle';
+import { COLORS } from '../styles/colorStyle';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-// import DateTimePicker from '@react-native-community/datetimepicker';
-import DatePicker from 'react-native-datepicker'
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const CustomizedIconInput = (props) => {
     const [textHidden, setTextHidden] = useState(true);
@@ -18,17 +17,17 @@ const CustomizedIconInput = (props) => {
 
     const { disabled, change, placeholder, secureTextEntry, input, label, type, meta: { touched, error, warning }, picker, datePicker } = props;
 
-    const formatDate = (date) =>{
+    const formatDate = (date) => {
         var d = new Date(date),
             month = '' + (d.getMonth() + 1),
             day = '' + d.getDate(),
             year = d.getFullYear();
-    
-        if (month.length < 2) 
+
+        if (month.length < 2)
             month = '0' + month;
-        if (day.length < 2) 
+        if (day.length < 2)
             day = '0' + day;
-    
+
         return [year, month, day].join('-');
     }
     useEffect(() => {
@@ -71,36 +70,27 @@ const CustomizedIconInput = (props) => {
             <Item style={styles.itemStyle}>
                 {props.iconImage ? <Image source={props.iconImage} style={styles.iconStyle} />
                     : <View style={styles.iconStyle} />}
-                <DatePicker
-                    style={{ width: 200 }}
-                    date={input.value}
-                    mode="date"
-                    placeholder={placeholder}
-                    showIcon = {false}
-                    format="YYYY-MM-DD"
-                    maxDate={formatDate(new Date())}
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
-                    customStyles={{
-                        placeholderText: {
-                            ...textStyle.regular7point5,
-                            paddingLeft: 0, 
-                            color: COLORS.greyText,
-                        },
-                        dateInput: {
-                            border: 'none',
-                            borderWidth: 0,
-                            marginLeft: moderateScale(6), 
-                            // justifyContent: 'flex-start',
-                            alignItems: 'flex-start',
-                        },
-                        dateText:{
-                            ...textStyle.regular7point5,
-                        }
-                    }}
-                    onDateChange={(date) => { input.onChange(date) }}
-                />
-            {touched && error !== undefined ? <Text style={{ color: COLORS.redErrorText }}>{error}</Text> : <Text />}
+
+                <TouchableOpacity onPress={() => setShowPicker(true)}><Text style={[textStyle.regular7point5, { marginLeft: moderateScale(6) }, input.value ? {} : { color: COLORS.greyText }]}>{input.value ? input.value : placeholder}</Text></TouchableOpacity>
+                {showPicker &&
+                    <DateTimePicker
+                        testID="dateTimePicker"
+                        value={input.value ? new Date(input.value) : new Date("1970-01-01")}
+                        mode={'date'}
+                        is24Hour={false}
+                        display="default"
+                        onChange={(event, date) => {
+                            if (date) {
+                                input.onChange(date.toISOString().substring(0, 10));
+                            }
+                            setShowPicker(false)
+                        }}
+                        maximumDate={new Date()}
+                        locale="es-ES"
+                    />
+                }
+
+                {touched && error !== undefined ? <Text style={{ color: COLORS.redErrorText }}>{error}</Text> : <Text />}
 
             </Item>)
 
